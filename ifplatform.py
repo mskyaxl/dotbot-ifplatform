@@ -5,22 +5,10 @@ import glob
 import os
 import sys
 import dotbot
+import platform
 from dotbot.dispatcher import Dispatcher
 from dotbot.util import module
 from dotbot.plugins import Clean, Create, Link, Shell
-
-
-def _inject_distro():
-    # Find distro in submodule
-    root_dir = os.path.dirname(os.path.realpath(__file__))
-    path = os.path.join(root_dir, 'lib/distro')
-    # Update path
-    sys.path.insert(0, path)
-
-
-_inject_distro()
-import distro
-
 
 class IfPlatform(dotbot.Plugin):
     _distros = [
@@ -83,7 +71,7 @@ class IfPlatform(dotbot.Plugin):
         if directive not in self._directives:
             raise ValueError('Cannot handle this directive %s' % directive)
 
-        did = distro.id()
+        did = platform.system().lower()
         if did == 'darwin':
             did = 'macos'
 
