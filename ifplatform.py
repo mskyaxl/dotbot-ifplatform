@@ -12,6 +12,7 @@ from dotbot.plugins import Clean, Create, Link, Shell
 
 class IfPlatform(dotbot.Plugin):
     _distros = [
+        'any',          # Any platform
         'anylinux',     # All linux
         'anybsd',       # All BSD
         'macos',        # MacOS
@@ -75,7 +76,8 @@ class IfPlatform(dotbot.Plugin):
         if did == 'darwin':
             did = 'macos'
 
-        if (directive == 'ifanylinux' and did in self._linux) or \
+        if  (directive == "ifany") or \
+            (directive == 'ifanylinux' and did in self._linux) or \
                 (directive == 'ifanybsd' and did in self._bsd) or \
                 (directive == 'if'+did):
             self._log.debug('Matched platform %s' % did)
