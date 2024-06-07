@@ -80,6 +80,8 @@ class IfPlatform(dotbot.Plugin):
         if did == 'darwin':
             did = 'macos'
 
+        did = (platform.freedesktop_os_release()['ID'])
+
         if  (directive == "ifany") or \
             (directive == 'ifanylinux' and did in self._linux) or \
                 (directive == 'ifanybsd' and did in self._bsd) or \
