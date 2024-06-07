@@ -76,16 +76,16 @@ class IfPlatform(dotbot.Plugin):
         if directive not in self._directives:
             raise ValueError('Cannot handle this directive %s' % directive)
 
-        did = platform.system().lower()
-        if did == 'darwin':
+        sys = platform.system().lower()
+        if sys == 'darwin':
             did = 'macos'
-
-        did = (platform.freedesktop_os_release()['ID'])
-
-        if  (directive == "ifany") or \
-            (directive == 'ifanylinux' and did in self._linux) or \
-                (directive == 'ifanybsd' and did in self._bsd) or \
-                (directive == 'if'+did):
+        
+        if sys == 'linux':
+            did = (platform.freedesktop_os_release()['ID'])
+        
+        if  (directive == 'ifanylinux' and did in self._linux) or \
+            (directive == 'ifanybsd' and did in self._bsd) or \
+            (directive == 'if'+did):
             self._log.debug('Matched platform %s' % did)
             return self._run_internal(data)
         else:
